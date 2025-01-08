@@ -208,14 +208,13 @@ class TariffCoordinator(DataUpdateCoordinator):
         self.resource = resource
 
     async def _async_update_data(self) -> dict[str, float]:
-        if not self.standing_initalised:
+        if not self.standing_initalised or not self.rate_initalised:
             tariff = await tariff_data(self.api, self.resource)
-            if not self.rate_initalised:
-                self.rate_initalised = True
-                return {"rate": tariff.rate}
 
+            self.rate_initalised = True
             self.standing_initalised = True
-            return {"standing_charge": tariff.standing_charge}
+
+            return {"rate": tariff.rate, "standing_charge": tariff.standing_charge}
 
         if await should_update():
             tariff = await tariff_data(self.api, self.resource)
