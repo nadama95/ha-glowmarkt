@@ -5,6 +5,7 @@ from datetime import datetime, time, timedelta
 from functools import cached_property
 from typing import Literal
 
+from aiohttp.client_exceptions import ClientConnectionError
 from homeassistant.components.sensor import (
     SensorDeviceClass,  # pyright: ignore [reportPrivateImportUsage]
     SensorEntity,
@@ -336,7 +337,10 @@ async def daily_data(api: GlowMarkt, resource: Resource) -> tuple[float, datetim
     t_to = now.replace(second=0, microsecond=0)
 
     # Pull latest data
-    await api.catchup(resource.resource_id)
+    try:
+        await api.catchup(resource.resource_id)
+    except ClientConnectionError as exc:
+        _LOGGER.error("Connection Error: %s", exc)
 
     reading = await api.get_reading(resource.resource_id, t_from, t_to, "P1D")
 

@@ -5,6 +5,7 @@ from functools import lru_cache
 from typing import Literal
 
 import aiohttp
+import aiohttp.client_exceptions
 
 from .models import (
     Reading,
@@ -121,6 +122,7 @@ class GlowMarkt:
     async def catchup(self, resource_id: str) -> None:
         """Tell API to pull latest DCC data."""
         await self.session.get(f"{self.BASE_URL}/resource/{resource_id}/catchup")
+
 
     async def get_reading(
         self,
