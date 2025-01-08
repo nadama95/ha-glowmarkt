@@ -1,0 +1,11 @@
+{
+    "step": {
+        "user": {
+            "data": {
+                "password": "Password",
+                "username": "Email"
+            },
+            "title": "Glowmarkt (DCC) API access"
+        }
+    }
+}

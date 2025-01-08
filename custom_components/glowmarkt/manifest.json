@@ -1,0 +1,17 @@
+{
+    "domain": "glowmarkt_dcc",
+    "name": "GlowMarkt DCC",
+    "codeowners": [
+        "@nadama95"
+    ],
+    "config_flow": true,
+    "dependencies": [],
+    "documentation": "https://github.com/nadama95/ha-glowmarkt",
+    "integration_type": "hub",
+    "iot_class": "cloud_polling",
+    "issue_tracker": "https://github.com/nadama95/ha-glowmarkt/issues",
+    "requirements": [
+        "aiohttp>=3.11.11"
+    ],
+    "version": "0.1.0"
+  }
