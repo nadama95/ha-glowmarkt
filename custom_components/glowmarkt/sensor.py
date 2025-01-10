@@ -88,7 +88,6 @@ class UsageSensor(SensorEntity):
 
     _attr_device_class = SensorDeviceClass.ENERGY
     _attr_has_entity_name = True
-    _attr_last_reset = None
     _attr_name_ = "Usage (today)"
     _attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
     _attr_state_class = SensorStateClass.TOTAL_INCREASING
@@ -132,17 +131,15 @@ class UsageSensor(SensorEntity):
         """Update all Node data from Glowmarkt."""
 
         if not self.initalised:
-            value, t_from = await daily_data(self.api, self.resource)
+            value, _ = await daily_data(self.api, self.resource)
             if value:
                 self._attr_native_value = round(value, 2)
-                self._attr_last_reset = t_from
                 self.initalised = True
 
         elif await should_update():
-            value, t_from = await daily_data(self.api, self.resource)
+            value, _ = await daily_data(self.api, self.resource)
             if value:
                 self._attr_native_value = round(value, 2)
-                self._attr_last_reset = t_from
 
 
 class Cost(SensorEntity):
